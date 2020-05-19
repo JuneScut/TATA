@@ -3,20 +3,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/screenutil.dart';
 
 class TextFieldWidget extends StatelessWidget {
-  TextFieldWidget({Key key, this.label, this.hintText, this.textInputType, this.controller, this.validator, this.obscureText}):super(key: key);
+  TextFieldWidget({Key key, this.label, this.hintText, this.textInputType, this.controller, this.validator, this.obscureText, this.focusNode}):super(key: key);
 
   final String label;
   final String hintText;
   final TextEditingController controller;
-  final FormFieldValidator validator;
+  final Function validator;
   final bool obscureText;
   final TextInputType textInputType;
+  final FocusNode focusNode;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      child: TextFormField(
+    return  TextFormField(
         controller: controller != null ? controller : null,
         decoration: InputDecoration(
             labelText: label != null ? label : " ",
@@ -32,8 +31,8 @@ class TextFieldWidget extends StatelessWidget {
         cursorColor: Colors.white70,
         keyboardType: textInputType,
         validator: validator != null ? validator : null,
-      ),
-    );
+        focusNode: focusNode,
+      );
     
   }
 }
