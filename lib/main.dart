@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tata/pages/home/home.dart';
 import 'package:tata/pages/home/login_page.dart';
 
 void main() {
@@ -18,7 +19,10 @@ class MyApp extends StatelessWidget {
         // closer together (more dense) than on mobile platforms.
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: LoginPage()
+      home: LoginPage(),
+      routes: {
+        "home": (context) => Home() 
+      },
     );
   }
 }

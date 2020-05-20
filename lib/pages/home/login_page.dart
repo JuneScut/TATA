@@ -129,7 +129,13 @@ class _LoginPageState extends State<LoginPage> with WidgetsBindingObserver{
                         width: MediaQuery.of(context).size.width,
                         alignment: Alignment.center,
                         height: ScreenUtil().setHeight(40),
-                        child: Text("以访客身份登录", style: TextStyle(color: Colors.white54)),
+                        child: GestureDetector(
+                          child: Text("以访客身份登录", style: TextStyle(color: Colors.white54)),
+                          onTap: () {
+                            Navigator.pushNamed(context, "home");
+                            // Navigator.popUntil(context, ModalRoute.withName("home"));
+                          },
+                        )
                       )
                     )
                 ]
