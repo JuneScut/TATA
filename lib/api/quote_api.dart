@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:dio/dio.dart';
-import 'package:tata/api/entites/quote.dart';
 
 import "api_path.dart";
 

@@ -5,6 +5,8 @@ import 'package:tata/api/api_path.dart';
 import 'package:tata/api/quote_api.dart';
 import "dart:math" as math;
 
+import 'package:tata/utils/time.dart';
+
 class Home extends StatefulWidget {
   @override
   _HomeState createState() => _HomeState();
@@ -18,22 +20,85 @@ class _HomeState extends State<Home> {
     });
     return quote;
   }
+  // temporary data 
+  Map<String, String> lattices = {
+    "today_content": "1.xxx 2.xxxx 3.xxx",
+    "satisfied": "1.xxx 2.xxxx 3.xxx",
+    "unsatiesfied": "1.xxx 2.xxxx 3.xxx",
+    "promote": "1.xxx 2.xxxx 3.xxx",
+    "tomorrow_plan": "1.xxx 2.xxxx 3.xxx"
+  };
+  Map<String, String> mapTitle = {
+    "today_content": "今日完成内容",
+    "satisfied": "今日比较满意的事情",
+    "unsatiesfied": "今日比较不满意的事情",
+    "promote": "今日推动了什么事情",
+    "tomorrow_plan": "明日计划"
+  };
+
+  Widget _buildItem(BuildContext context, String key) {
+    String title = mapTitle[key];
+    String content = lattices[key];
+    return Container(
+      margin: EdgeInsets.only(left: ScreenUtil().setWidth(30)),
+      width: double.infinity,
+      height: ScreenUtil().setHeight(200),
+      padding: EdgeInsets.symmetric(vertical: ScreenUtil().setWidth(20)),
+      decoration: BoxDecoration(
+        color: Colors.grey[200],
+        border: Border(
+          left: BorderSide(color: Colors.black38, width: ScreenUtil().setWidth(1), style: BorderStyle.solid),
+          bottom: BorderSide(color: Colors.black38, width: ScreenUtil().setWidth(1), style: BorderStyle.solid),
+        )
+      ),
+      child: Row(
+        children: <Widget>[
+          Container(
+            width: ScreenUtil().setWidth(6),
+            height: ScreenUtil().setHeight(180),
+            child: DecoratedBox(decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: [
+                  Colors.blueAccent,
+                  Colors.purpleAccent
+                ],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight
+              )
+            )),
+          ),
+          Container(
+            padding: EdgeInsets.symmetric(horizontal: ScreenUtil().setHeight(16)),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                Text(title, style: TextStyle(fontWeight: FontWeight.bold, fontSize: ScreenUtil().setSp(32), height: 1.5)),
+                Text(content, style: TextStyle(fontSize: ScreenUtil().setSp(24), height: 1.2), maxLines: 3,)
+              ],
+            ),
+          )
+        ],
+      )
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     ScreenUtil.init(context, width: 750, height: 1334);
-    _getQuoteEveryday();
+    quote == "" ? _getQuoteEveryday() : null;
     return Scaffold(
       body: CustomScrollView(
         slivers: <Widget>[
           SliverPersistentHeader(
-            floating: true,
+            // floating: true,
             pinned: true,
             delegate: _SliverAppBarDelegate(
-              minHeight: 60,
-              maxHeight: 100,
+              minHeight: ScreenUtil().setWidth(120),
+              maxHeight: ScreenUtil().setWidth(180),
               child: Container(
-                padding: EdgeInsets.symmetric(vertical: ScreenUtil().setWidth(10), horizontal: ScreenUtil().setWidth(20)),
+                padding: EdgeInsets.symmetric(vertical: ScreenUtil().setWidth(10), horizontal: ScreenUtil().setWidth(30)),
+                decoration: BoxDecoration(color: Colors.white),
                 child:  Row(
                   children: <Widget>[
                     AspectRatio(
@@ -44,15 +109,15 @@ class _HomeState extends State<Home> {
                       ),
                     ),
                     Container(
-                      padding: EdgeInsets.only(left: ScreenUtil().setWidth(20)),
+                      padding: EdgeInsets.only(left: ScreenUtil().setWidth(10)),
                       child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          Text("2020年5月19日", style: TextStyle(fontSize: ScreenUtil().setSp(40), fontWeight: FontWeight.bold),),
-                          Text("下午好!", style: TextStyle(fontSize: ScreenUtil().setSp(30)))
-                        ],
-                      ),
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Text(TimeUtil.getTodayString(), style: TextStyle(fontSize: ScreenUtil().setSp(36), fontWeight: FontWeight.bold, height: 1.2)),
+                            Text(TimeUtil.getTimeDivision(), style: TextStyle(fontSize: ScreenUtil().setSp(26), height: 1.2), )
+                          ],
+                        ),
                     )
                   ],
                 ),
@@ -61,42 +126,67 @@ class _HomeState extends State<Home> {
           ),
           SliverToBoxAdapter(
             child: Container(
-              margin: EdgeInsets.only(top: ScreenUtil().setHeight(30)),
-              padding: EdgeInsets.only(left: ScreenUtil().setWidth(30)),
-              height: ScreenUtil().setHeight(200),
+              margin: EdgeInsets.fromLTRB(ScreenUtil().setWidth(30),ScreenUtil().setHeight(20), 0,0),
+              height: ScreenUtil().setHeight(300),
               decoration: BoxDecoration(
                 image: DecorationImage(
-                  image: AssetImage("images/login.jpg"),
+                  image: NetworkImage(
+                        ApiPath.unsplashUrl_1600_900),
                   fit: BoxFit.fill
-                )
+                ),
+                boxShadow:  [ //卡片阴影
+                  BoxShadow(
+                      color: Colors.black38,
+                      offset: Offset(6.0, 6.0),
+                      blurRadius: 8.0
+                  )
+                ]
               ),
-              child: Text(quote),
-            ),
-          ),
-          SliverPadding(
-            padding: const EdgeInsets.all(8.0),
-            sliver: new SliverGrid( //Grid
-              gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2, //Grid按两列显示
-                mainAxisSpacing: 10.0,
-                crossAxisSpacing: 10.0,
-                childAspectRatio: 4.0,
-              ),
-              delegate: new SliverChildBuilderDelegate(
-                    (BuildContext context, int index) {
-                  //创建子widget      
-                  return new Container(
+              child: Stack(
+                children: <Widget>[
+                  FractionallySizedBox(
+                    widthFactor: 1,
+                    heightFactor: 1,
+                    child: Container(
+                      child: DecoratedBox(
+                        decoration: BoxDecoration(color: Colors.black38),
+                      ),
+                    ),
+                  ),
+                  Container(
                     alignment: Alignment.center,
-                    color: Colors.cyan[100 * (index % 9)],
-                    child: new Text('grid item $index'),
-                  );
-                },
-                childCount: 20,
-              ),
+                    padding: EdgeInsets.symmetric(horizontal: ScreenUtil().setWidth(18)),
+                    child: Text(quote, style: TextStyle(color: Colors.white),)
+                  )
+                ],
+              )
             ),
           ),
+          SliverList(
+            delegate: SliverChildBuilderDelegate(
+                  (BuildContext context, int index) {
+                return _buildItem(context, lattices.keys.toList()[index]);
+              },
+              childCount: lattices.length,
+            ),
+          )
         ],
-      )
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.shifting,
+        backgroundColor: Color.fromRGBO(154, 171, 201, 1),
+        iconSize: 24.0, // BottomNavigationBarItem 中 icon 的大小
+        currentIndex: 2, 
+        selectedItemColor: Colors.white,
+        unselectedItemColor: Colors.white38,
+        elevation: 4,
+        selectedIconTheme: IconThemeData(size: ScreenUtil().setSp(50)),
+        items: <BottomNavigationBarItem> [
+          BottomNavigationBarItem(icon: Icon(Icons.book), title: Text("日志"), backgroundColor:Color.fromRGBO(154, 171, 201, 1),),
+          BottomNavigationBarItem(icon: Icon(Icons.calendar_today), title: Text("日志"),  backgroundColor:Color.fromRGBO(154, 171, 201, 1),),
+          BottomNavigationBarItem(icon: Icon(Icons.mode_edit), title: Text("日志"),  backgroundColor:Color.fromRGBO(154, 171, 201, 1),),
+        ]
+      ),
     );
   }
 }
