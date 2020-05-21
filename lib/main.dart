@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tata/pages/calender/calendar.dart';
 import 'package:tata/pages/home/home.dart';
 import 'package:tata/pages/home/login_page.dart';
 
@@ -11,7 +12,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'TATA',
       theme: ThemeData(
         primarySwatch: Colors.blue,
         // This makes the visual density adapt to the platform that you run
@@ -21,7 +22,8 @@ class MyApp extends StatelessWidget {
       ),
       home: LoginPage(),
       routes: {
-        "home": (context) => Home() 
+        "home": (context) => Home(),
+        "calendar": (context) => CalendarPage()
       },
     );
   }

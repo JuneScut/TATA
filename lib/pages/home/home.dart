@@ -173,19 +173,27 @@ class _HomeState extends State<Home> {
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.shifting,
+        type: BottomNavigationBarType.fixed,
+        showUnselectedLabels: false,
         backgroundColor: Color.fromRGBO(154, 171, 201, 1),
         iconSize: 24.0, // BottomNavigationBarItem 中 icon 的大小
         currentIndex: 2, 
         selectedItemColor: Colors.white,
         unselectedItemColor: Colors.white38,
-        elevation: 4,
         selectedIconTheme: IconThemeData(size: ScreenUtil().setSp(50)),
         items: <BottomNavigationBarItem> [
-          BottomNavigationBarItem(icon: Icon(Icons.book), title: Text("日志"), backgroundColor:Color.fromRGBO(154, 171, 201, 1),),
-          BottomNavigationBarItem(icon: Icon(Icons.calendar_today), title: Text("日志"),  backgroundColor:Color.fromRGBO(154, 171, 201, 1),),
-          BottomNavigationBarItem(icon: Icon(Icons.mode_edit), title: Text("日志"),  backgroundColor:Color.fromRGBO(154, 171, 201, 1),),
-        ]
+          BottomNavigationBarItem(icon: Icon(Icons.book), title: Text("")),
+          BottomNavigationBarItem(icon: Icon(Icons.calendar_today), title: Text(""), ),
+          BottomNavigationBarItem(icon: Icon(Icons.mode_edit), title: Text("编辑"), ),
+        ],
+        onTap: (int index) {
+          switch(index) {
+            case 0:
+            case 1:
+            case 2:
+              Navigator.pushNamed(context, "calendar");
+          }
+        },
       ),
     );
   }
