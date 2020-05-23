@@ -3,9 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tata/api/api_path.dart';
 import 'package:tata/api/quote_api.dart';
+import 'package:tata/application.dart';
+import 'package:tata/route/routes.dart';
 import "dart:math" as math;
 
 import 'package:tata/utils/time.dart';
+import 'package:tata/route/navigate_service.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -191,7 +194,8 @@ class _HomeState extends State<Home> {
             case 0:
             case 1:
             case 2:
-              Navigator.pushNamed(context, "calendar");
+              // Navigator.pushNamed(context, "calendar");
+              Application.getIt<NavigateService>().popAndPushNamed(Routes.calendar);
           }
         },
       ),

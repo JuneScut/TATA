@@ -6,9 +6,9 @@ import 'package:flutter_calendar_carousel/flutter_calendar_carousel.dart'
     show CalendarCarousel;
 import 'package:flutter_calendar_carousel/classes/event.dart';
 import 'package:flutter_calendar_carousel/classes/event_list.dart';
-import 'package:intl/intl.dart' show DateFormat;
 import 'package:flutter_cupertino_date_picker/flutter_cupertino_date_picker.dart';
-import 'package:tata/widgets/date_picker_in_page.dart';
+import 'package:provider/provider.dart';
+import 'package:tata/provider/time_provider.dart';
 
 Color highlightColor = Color.fromRGBO(0, 223, 185, 0.8);
 
@@ -43,7 +43,8 @@ class _CalendarPageState extends State<CalendarPage> {
   Widget build(BuildContext context) {
     ScreenUtil.init(context, width: 750, height: 1334);
     var height = MediaQuery.of(context).size.height;
-    DateTime _currentDate = new DateTime.now();
+    // DateTime _currentDate = new DateTime.now();
+    final _timeModel = Provider.of<TimeModel>(context);
 
     return Scaffold(
       body: Container(
@@ -91,10 +92,12 @@ class _CalendarPageState extends State<CalendarPage> {
                       ),
                     ),
                   markedDatesMap: _markedDateMap,
-                  selectedDateTime: _currentDate,
+                  selectedDateTime: _timeModel.currentTime,
                   selectedDayButtonColor: highlightColor,
                   headerTitleTouchable: true,
                   locale: "zh_cn",
+                  headerText: '${_timeModel.currentTime.year}年${_timeModel.currentTime.month}月',
+                  showHeaderButton: false,
                   onHeaderTitlePressed: () {
                     const String MIN_DATETIME = '2019-12-31';
                     const String MAX_DATETIME = '2070-12-31';
@@ -108,13 +111,12 @@ class _CalendarPageState extends State<CalendarPage> {
                       ),
                       minDateTime: DateTime.parse(MIN_DATETIME),
                       maxDateTime: DateTime.parse(MAX_DATETIME),
-                      initialDateTime: _currentDate,
+                      initialDateTime: _timeModel.currentTime,
                       dateFormat: _format,
                       locale: DateTimePickerLocale.zh_cn,
                       onConfirm: (dateTime, List<int> index) {
                         setState(() {
-                          // _dateTime = dateTime;
-                          _currentDate = new DateTime(dateTime.year, dateTime.month, dateTime.day);
+                          _timeModel.setCurrentTime(dateTime);
                         });
                       },
                     );
@@ -125,7 +127,8 @@ class _CalendarPageState extends State<CalendarPage> {
           )
         )
         
-      ),
+      )
+      
     );
   }
 

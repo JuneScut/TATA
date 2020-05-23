@@ -1,6 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:tata/application.dart';
+import 'package:tata/route/navigate_service.dart';
+import 'package:tata/route/routes.dart';
 import 'package:tata/widgets/widget_button_empty.dart';
 import 'package:tata/widgets/widget_textfield.dart';
 
@@ -132,7 +135,8 @@ class _LoginPageState extends State<LoginPage> with WidgetsBindingObserver{
                         child: GestureDetector(
                           child: Text("以访客身份登录", style: TextStyle(color: Colors.white54)),
                           onTap: () {
-                            Navigator.pushNamed(context, "home");
+                            // Navigator.pushNamed(context, "home");
+                            Application.getIt<NavigateService>().popAndPushNamed(Routes.home);
                             // Navigator.popUntil(context, ModalRoute.withName("home"));
                           },
                         )

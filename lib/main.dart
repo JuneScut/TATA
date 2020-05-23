@@ -7,6 +7,7 @@ import 'package:tata/pages/home/home.dart';
 import 'package:tata/pages/home/login_page.dart';
 import 'package:tata/provider/time_provider.dart';
 import 'package:tata/route/routes.dart';
+import 'package:tata/route/navigate_service.dart';
 
 void main() {
   Router router = Router();
@@ -29,15 +30,17 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'TATA',
+      navigatorKey: Application.getIt<NavigateService>().key,
+      onGenerateRoute: Application.router.generator,
       theme: ThemeData(
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       home: LoginPage(),
-      routes: {
-        "home": (context) => Home(),
-        "calendar": (context) => CalendarPage()
-      },
+      // routes: {
+      //   "home": (context) => Home(),
+      //   "calendar": (context) => CalendarPage()
+      // },
     );
   }
 }
