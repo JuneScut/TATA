@@ -32,6 +32,10 @@ dependencies:
   dio: ^3.0.9
   http_client_helper: ^0.2.1
   flutter_calendar_carousel: ^1.4.12
+  flutter_cupertino_date_picker: ^1.0.26
+  provider: ^4.1.2
+  fluro: ^1.6.3
+  get_it: ^4.0.2
 
 dev_dependencies:
   flutter_test:

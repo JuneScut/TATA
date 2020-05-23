@@ -7,6 +7,10 @@ import 'package:flutter_calendar_carousel/flutter_calendar_carousel.dart'
 import 'package:flutter_calendar_carousel/classes/event.dart';
 import 'package:flutter_calendar_carousel/classes/event_list.dart';
 import 'package:intl/intl.dart' show DateFormat;
+import 'package:flutter_cupertino_date_picker/flutter_cupertino_date_picker.dart';
+import 'package:tata/widgets/date_picker_in_page.dart';
+
+Color highlightColor = Color.fromRGBO(0, 223, 185, 0.8);
 
 class CalendarPage extends StatefulWidget {
   @override
@@ -25,7 +29,7 @@ class _CalendarPageState extends State<CalendarPage> {
             width: 5.0,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(1000),
-              color: Color.fromRGBO(0, 223, 185, 0.8),
+              color: highlightColor,
             ),
           ),
         ),
@@ -39,7 +43,7 @@ class _CalendarPageState extends State<CalendarPage> {
   Widget build(BuildContext context) {
     ScreenUtil.init(context, width: 750, height: 1334);
     var height = MediaQuery.of(context).size.height;
-    DateTime _currentDate = new DateTime(2019, 12, new DateTime.now().day);
+    DateTime _currentDate = new DateTime.now();
 
     return Scaffold(
       body: Container(
@@ -71,7 +75,7 @@ class _CalendarPageState extends State<CalendarPage> {
                   nextDaysTextStyle: TextStyle(color: Colors.white54),
                   prevDaysTextStyle: TextStyle(color: Colors.white54),
                   weekdayTextStyle: TextStyle(color: Colors.white),
-                  todayButtonColor: Color.fromRGBO(0, 223, 185, 0.8),
+                  todayButtonColor: highlightColor,
                   headerMargin: EdgeInsets.fromLTRB(0, ScreenUtil().setHeight(50), 0, ScreenUtil().setHeight(32)),
                   headerTextStyle: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: ScreenUtil().setSp(36)),
                   iconColor: Colors.white,
@@ -82,13 +86,39 @@ class _CalendarPageState extends State<CalendarPage> {
                       width: ScreenUtil().setWidth(10),
                       height: ScreenUtil().setWidth(10),
                       decoration: BoxDecoration(
-                        color: Color.fromRGBO(0, 223, 185, 0.8),
+                        color: highlightColor,
                         borderRadius: BorderRadius.all(Radius.circular(1000))
                       ),
                     ),
                   markedDatesMap: _markedDateMap,
                   selectedDateTime: _currentDate,
-                  selectedDayButtonColor: Color.fromRGBO(0, 223, 185, 0.8),
+                  selectedDayButtonColor: highlightColor,
+                  headerTitleTouchable: true,
+                  locale: "zh_cn",
+                  onHeaderTitlePressed: () {
+                    const String MIN_DATETIME = '2019-12-31';
+                    const String MAX_DATETIME = '2070-12-31';
+                    String _format = 'yyyy-MMMM-dd';
+                    DatePicker.showDatePicker(
+                      context,
+                      onMonthChangeStartWithFirstDate: true,
+                      pickerTheme: DateTimePickerTheme(
+                        showTitle: true,
+                        confirm: Text('选取', style: TextStyle(color: highlightColor, fontWeight: FontWeight.bold)),
+                      ),
+                      minDateTime: DateTime.parse(MIN_DATETIME),
+                      maxDateTime: DateTime.parse(MAX_DATETIME),
+                      initialDateTime: _currentDate,
+                      dateFormat: _format,
+                      locale: DateTimePickerLocale.zh_cn,
+                      onConfirm: (dateTime, List<int> index) {
+                        setState(() {
+                          // _dateTime = dateTime;
+                          _currentDate = new DateTime(dateTime.year, dateTime.month, dateTime.day);
+                        });
+                      },
+                    );
+                  }
                 )
               ]
             )
