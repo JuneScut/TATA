@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_html/style.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tata/api/api_path.dart';
 import 'package:tata/api/quote_api.dart';
@@ -9,6 +10,9 @@ import "dart:math" as math;
 
 import 'package:tata/utils/time.dart';
 import 'package:tata/route/navigate_service.dart';
+
+import 'package:flutter_html/flutter_html.dart';
+import 'package:flutter_html/html_parser.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -25,7 +29,7 @@ class _HomeState extends State<Home> {
   }
   // temporary data 
   Map<String, String> lattices = {
-    "today_content": "1.xxx 2.xxxx 3.xxx",
+    "today_content": "<p>1.Todo</p><p>2.blabla</p>",
     "satisfied": "1.xxx 2.xxxx 3.xxx",
     "unsatiesfied": "1.xxx 2.xxxx 3.xxx",
     "promote": "1.xxx 2.xxxx 3.xxx",
@@ -45,7 +49,7 @@ class _HomeState extends State<Home> {
     return Container(
       margin: EdgeInsets.only(left: ScreenUtil().setWidth(30)),
       width: double.infinity,
-      height: ScreenUtil().setHeight(200),
+      height: ScreenUtil().setHeight(250),
       padding: EdgeInsets.symmetric(vertical: ScreenUtil().setWidth(20)),
       decoration: BoxDecoration(
         color: Colors.grey[200],
@@ -72,12 +76,20 @@ class _HomeState extends State<Home> {
           ),
           Container(
             padding: EdgeInsets.symmetric(horizontal: ScreenUtil().setHeight(16)),
+            width: ScreenUtil().setWidth(700),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
                 Text(title, style: TextStyle(fontWeight: FontWeight.bold, fontSize: ScreenUtil().setSp(32), height: 1.5)),
-                Text(content, style: TextStyle(fontSize: ScreenUtil().setSp(24), height: 1.2), maxLines: 3,)
+                // Text(content, style: TextStyle(fontSize: ScreenUtil().setSp(24), height: 1.2), maxLines: 3,)
+                Expanded(
+                  child: SingleChildScrollView(
+                    child: Html(
+                      data: content,
+                    ),
+                  ),
+                ) 
               ],
             ),
           )
@@ -193,9 +205,11 @@ class _HomeState extends State<Home> {
           switch(index) {
             case 0:
             case 1:
-            case 2:
-              // Navigator.pushNamed(context, "calendar");
               Application.getIt<NavigateService>().pushNamed(Routes.calendar);
+              break;
+            case 2:
+              Application.getIt<NavigateService>().pushNamed(Routes.editor);
+              break;
           }
         },
       ),
