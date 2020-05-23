@@ -195,7 +195,7 @@ class _HomeState extends State<Home> {
             case 1:
             case 2:
               // Navigator.pushNamed(context, "calendar");
-              Application.getIt<NavigateService>().popAndPushNamed(Routes.calendar);
+              Application.getIt<NavigateService>().pushNamed(Routes.calendar);
           }
         },
       ),
