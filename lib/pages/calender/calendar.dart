@@ -101,7 +101,7 @@ class _CalendarPageState extends State<CalendarPage> {
                   onHeaderTitlePressed: () {
                     const String MIN_DATETIME = '2019-12-31';
                     const String MAX_DATETIME = '2070-12-31';
-                    String _format = 'yyyy-MMMM-dd';
+                    String _format = 'yyyy-MMMM';
                     DatePicker.showDatePicker(
                       context,
                       onMonthChangeStartWithFirstDate: true,
