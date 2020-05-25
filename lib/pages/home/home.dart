@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_html/style.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tata/api/api_path.dart';
 import 'package:tata/api/quote_api.dart';
@@ -12,7 +11,6 @@ import 'package:tata/utils/time.dart';
 import 'package:tata/route/navigate_service.dart';
 
 import 'package:flutter_html/flutter_html.dart';
-import 'package:flutter_html/html_parser.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -208,7 +206,7 @@ class _HomeState extends State<Home> {
               Application.getIt<NavigateService>().pushNamed(Routes.calendar);
               break;
             case 2:
-              Application.getIt<NavigateService>().pushNamed(Routes.editor);
+              Application.getIt<NavigateService>().pushNamed(Routes.detail);
               break;
           }
         },

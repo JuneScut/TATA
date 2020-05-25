@@ -12,6 +12,7 @@ class Routes {
   static String login = "/login";
   static String calendar = "/clendar";
   static String editor = "/editor";
+  static String detail = "/detail";
 
   static void configureRoutes(Router router) {
     router.notFoundHandler = new Handler(
@@ -24,6 +25,6 @@ class Routes {
     router.define(home, handler: homeHandler);
     router.define(calendar, handler: calendarHandler);
     router.define(editor, handler: editorHandler);
-
+    router.define(detail, handler: detailHandler);
   }
 }

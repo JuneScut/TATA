@@ -2,6 +2,7 @@
 import 'package:fluro/fluro.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:tata/pages/calender/calendar.dart';
+import 'package:tata/pages/detail/detail.dart';
 import 'package:tata/pages/home/home.dart';
 import 'package:tata/pages/home/login_page.dart';
 import 'package:tata/pages/detail/editor.dart';
@@ -27,4 +28,10 @@ var calendarHandler = new Handler(
 var editorHandler = new Handler(
     handlerFunc: (BuildContext context, Map<String, List<Object>> params) {
       return EditorPage();
+    });
+
+// 跳转到详情页面
+var detailHandler = new Handler(
+    handlerFunc: (BuildContext context, Map<String, List<Object>> params) {
+      return DetailPage();
     });
