@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -145,6 +146,9 @@ class _HomeState extends State<Home> {
                 image: DecorationImage(
                   image: NetworkImage(
                         ApiPath.unsplashUrl_1600_900),
+                  // image: CachedNetworkImageProvider(
+                  //   ApiPath.unsplashUrl_1600_900
+                  // ),
                   fit: BoxFit.fill
                 ),
                 boxShadow:  [ //卡片阴影
@@ -202,6 +206,8 @@ class _HomeState extends State<Home> {
         onTap: (int index) {
           switch(index) {
             case 0:
+              Application.getIt<NavigateService>().pushNamed(Routes.diaries);
+              break;
             case 1:
               Application.getIt<NavigateService>().pushNamed(Routes.calendar);
               break;

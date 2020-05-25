@@ -38,6 +38,7 @@ dependencies:
   get_it: ^4.0.2
   html_editor: ^1.0.1
   flutter_html: ^1.0.0-pre.1
+  cached_network_image: ^2.2.0+1
 
 dev_dependencies:
   flutter_test:

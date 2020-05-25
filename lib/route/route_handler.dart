@@ -3,6 +3,7 @@ import 'package:fluro/fluro.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:tata/pages/calender/calendar.dart';
 import 'package:tata/pages/detail/detail.dart';
+import 'package:tata/pages/diaries/diary.dart';
 import 'package:tata/pages/home/home.dart';
 import 'package:tata/pages/home/login_page.dart';
 import 'package:tata/pages/detail/editor.dart';
@@ -34,4 +35,11 @@ var editorHandler = new Handler(
 var detailHandler = new Handler(
     handlerFunc: (BuildContext context, Map<String, List<Object>> params) {
       return DetailPage();
+    });
+
+
+// 跳转到日历本选择页面
+var diariesHandler = new Handler(
+    handlerFunc: (BuildContext context, Map<String, List<Object>> params) {
+      return DiariesPage();
     });
