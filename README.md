@@ -13,3 +13,9 @@
 ### MultiProvider使用
 ### 日历选择
 ![日历](/docs/calendar.png)
+
+### 详情页
+![详情](/docs/detail.png)
+
+### 编辑页
+![编辑](/docs/editor.png)
