@@ -33,8 +33,9 @@ class MyApp extends StatelessWidget {
       navigatorKey: Application.getIt<NavigateService>().key,
       onGenerateRoute: Application.router.generator,
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.blueGrey,
         visualDensity: VisualDensity.adaptivePlatformDensity,
+        primaryColor: Color.fromRGBO(154, 171, 201, 1),
       ),
       home: LoginPage(),
       // routes: {
